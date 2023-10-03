@@ -1,17 +1,16 @@
-package com.lh.rabbit.direct;
+package com.lh.rabbit.headers;
 
 import com.rabbitmq.client.*;
 
-public class ConsumerDirect {
+import java.util.HashMap;
+import java.util.Map;
+
+public class ConsumerHeaders {
 
     public static void main(String[] args) throws Exception{
 
-        String queueName="lh_queue_name";
-        String exchangeName="lh_exchange_name";
-        String queueName_1="lh_queue_name_1";
-        String queueName_2="lh_queue_name_2";
-        String queueName_3="lh_queue_name_3";
-        String queueName_4="lh_queue_name_4";
+        String exchangeName="lh_exchange_headers_name";
+        String queueName_1="lh_queue_name_headers_1";
 
         //创建一个链接工厂
         ConnectionFactory factory=new ConnectionFactory();
@@ -40,6 +39,19 @@ public class ConsumerDirect {
             System.out.println("消费消息被中断");
         };
 
+        Map<String,Object> headerMap=new HashMap<>();
+        headerMap.put("x-match","any");
+        headerMap.put("name","luohao");
+        headerMap.put("sex","男");
+
+        /**
+         * 将我们的交换机和队列绑定
+         * 1 队列名称
+         * 2 交换机名称
+         * 3 路由键，在我们直连模式下，可以为我们的队列名称
+         */
+        channel.queueBind(queueName_1,exchangeName,"",headerMap);
+
         /**
          * 消费消息
          * 1 消费哪个队列
@@ -48,9 +60,6 @@ public class ConsumerDirect {
          * 4 取消消息的回调
          */
         channel.basicConsume(queueName_1,true,deliverCallback,cancelCallback);
-        channel.basicConsume(queueName_2,true,deliverCallback,cancelCallback);
-        channel.basicConsume(queueName_3,true,deliverCallback,cancelCallback);
-        channel.basicConsume(queueName_4,true,deliverCallback,cancelCallback);
 
     }
 

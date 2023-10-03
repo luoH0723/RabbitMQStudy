@@ -1,20 +1,20 @@
-package com.lh.rabbit.direct;
+package com.lh.rabbit.fanout;
 
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-public class ProducerDirect {
+public class ProducerFanout {
 
     public static void main(String[] args) throws Exception {
 
 
-        String exchangeName="lh_exchange_name";
-        String queueName_1="lh_queue_name_1";
-        String queueName_2="lh_queue_name_2";
-        String queueName_3="lh_queue_name_3";
-        String queueName_4="lh_queue_name_4";
+        String exchangeName="lh_exchange_fanout_name";
+        String queueName_1="lh_queue_name_fanout_1";
+        String queueName_2="lh_queue_name_fanout_2";
+        String queueName_3="lh_queue_name_fanout_3";
+        String queueName_4="lh_queue_name_fanout_4";
 
         String key_1="key_1";
         String key_2="key_2";
@@ -44,7 +44,7 @@ public class ProducerDirect {
          * 4 指定交换机在没有队列绑定时，是否需要删除，设置为false表示不删除
          * 5 Map<String,Object>类型，用来指定我们交换机其他的一些结构化参数，我们这里直接设置成null
          */
-        channel.exchangeDeclare(exchangeName, BuiltinExchangeType.DIRECT,true,false,null);
+        channel.exchangeDeclare(exchangeName, BuiltinExchangeType.FANOUT,true,false,null);
 
 
         /**
@@ -73,9 +73,9 @@ public class ProducerDirect {
 
         //发送消息
         String message="hello rabbitmq";
-        String key_1_message="key1 message";
-        String key_3_message="key3 message";
-        String key_4_message="key4 message";
+        String key_1_message="key1 fanout message";
+//        String key_3_message="key3 message";
+//        String key_4_message="key4 message";
 
         /**
          * 发送消息
@@ -85,8 +85,6 @@ public class ProducerDirect {
          * 4 发送消息的消息体
          */
         channel.basicPublish(exchangeName,key_1,null,key_1_message.getBytes());
-        channel.basicPublish(exchangeName,key_3,null,key_3_message.getBytes());
-        channel.basicPublish(exchangeName,key_4,null,key_4_message.getBytes());
 
         channel.close();
         connection.close();

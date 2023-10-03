@@ -1,17 +1,17 @@
-package com.lh.rabbit.direct;
+package com.lh.rabbit.topic;
 
 import com.rabbitmq.client.*;
 
-public class ConsumerDirect {
+public class ConsumerTopic {
 
     public static void main(String[] args) throws Exception{
 
         String queueName="lh_queue_name";
-        String exchangeName="lh_exchange_name";
-        String queueName_1="lh_queue_name_1";
-        String queueName_2="lh_queue_name_2";
-        String queueName_3="lh_queue_name_3";
-        String queueName_4="lh_queue_name_4";
+        String exchangeName="lh_exchange_topic_name";
+        String queueName_1="lh_queue_name_topic_1";
+        String queueName_2="lh_queue_name_topic_2";
+        String queueName_3="lh_queue_name_topic_3";
+        String queueName_4="lh_queue_name_topic_4";
 
         //创建一个链接工厂
         ConnectionFactory factory=new ConnectionFactory();

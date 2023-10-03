@@ -1,17 +1,17 @@
-package com.lh.rabbit.direct;
+package com.lh.rabbit.fanout;
 
 import com.rabbitmq.client.*;
 
-public class ConsumerDirect {
+public class ConsumerFanout {
 
     public static void main(String[] args) throws Exception{
 
         String queueName="lh_queue_name";
-        String exchangeName="lh_exchange_name";
-        String queueName_1="lh_queue_name_1";
-        String queueName_2="lh_queue_name_2";
-        String queueName_3="lh_queue_name_3";
-        String queueName_4="lh_queue_name_4";
+        String exchangeName="lh_exchange_fanout_name";
+        String queueName_1="lh_queue_name_fanout_1";
+        String queueName_2="lh_queue_name_fanout_2";
+        String queueName_3="lh_queue_name_fanout_3";
+        String queueName_4="lh_queue_name_fanout_4";
 
         //创建一个链接工厂
         ConnectionFactory factory=new ConnectionFactory();

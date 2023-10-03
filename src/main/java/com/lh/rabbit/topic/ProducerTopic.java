@@ -1,25 +1,25 @@
-package com.lh.rabbit.direct;
+package com.lh.rabbit.topic;
 
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-public class ProducerDirect {
+public class ProducerTopic {
 
     public static void main(String[] args) throws Exception {
 
 
-        String exchangeName="lh_exchange_name";
-        String queueName_1="lh_queue_name_1";
-        String queueName_2="lh_queue_name_2";
-        String queueName_3="lh_queue_name_3";
-        String queueName_4="lh_queue_name_4";
+        String exchangeName="lh_exchange_topic_name";
+        String queueName_1="lh_queue_name_topic_1";
+        String queueName_2="lh_queue_name_topic_2";
+        String queueName_3="lh_queue_name_topic_3";
+        String queueName_4="lh_queue_name_topic_4";
 
-        String key_1="key_1";
-        String key_2="key_2";
-        String key_3="key_3";
-        String key_4="key_4";
+        String key_1="key1.key2.key3.*";
+        String key_2="key1.#";
+        String key_3="*.key2.*.key4";
+        String key_4="#.key3.key4";
 
         //创建一个链接工厂
         ConnectionFactory factory=new ConnectionFactory();
@@ -44,7 +44,7 @@ public class ProducerDirect {
          * 4 指定交换机在没有队列绑定时，是否需要删除，设置为false表示不删除
          * 5 Map<String,Object>类型，用来指定我们交换机其他的一些结构化参数，我们这里直接设置成null
          */
-        channel.exchangeDeclare(exchangeName, BuiltinExchangeType.DIRECT,true,false,null);
+        channel.exchangeDeclare(exchangeName, BuiltinExchangeType.TOPIC,true,false,null);
 
 
         /**
@@ -67,15 +67,15 @@ public class ProducerDirect {
          * 3 路由键，在我们直连模式下，可以为我们的队列名称
          */
         channel.queueBind(queueName_1,exchangeName,key_1);
-        channel.queueBind(queueName_2,exchangeName,key_1);
+        channel.queueBind(queueName_2,exchangeName,key_2);
         channel.queueBind(queueName_3,exchangeName,key_3);
         channel.queueBind(queueName_4,exchangeName,key_4);
 
         //发送消息
         String message="hello rabbitmq";
-        String key_1_message="key1 message";
-        String key_3_message="key3 message";
-        String key_4_message="key4 message";
+        String key_1_message="key1 topic message";
+//        String key_3_message="key3 message";
+//        String key_4_message="key4 message";
 
         /**
          * 发送消息
@@ -84,12 +84,12 @@ public class ProducerDirect {
          * 3 其他参数信息
          * 4 发送消息的消息体
          */
-        channel.basicPublish(exchangeName,key_1,null,key_1_message.getBytes());
-        channel.basicPublish(exchangeName,key_3,null,key_3_message.getBytes());
-        channel.basicPublish(exchangeName,key_4,null,key_4_message.getBytes());
+        channel.basicPublish(exchangeName,"key1.key2.key3.key4",null,key_1_message.getBytes());
 
         channel.close();
         connection.close();
+
+        System.out.println("发送消息成功");
 
     }
 
