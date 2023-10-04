@@ -12,7 +12,7 @@ public class Consumer {
         //创建一个链接工厂
         ConnectionFactory factory=new ConnectionFactory();
         //配制服务地址
-        factory.setHost("139.199.181.244");
+        factory.setHost("192.168.92.131");
         //账号
         factory.setUsername("admin");
         //密码

@@ -18,7 +18,7 @@ public class Producer {
         //创建一个链接工厂
         ConnectionFactory factory=new ConnectionFactory();
         //配制服务地址
-        factory.setHost("139.199.181.244");
+        factory.setHost("192.168.92.131");
         //账号
         factory.setUsername("admin");
         //密码
@@ -60,7 +60,7 @@ public class Producer {
         channel.queueBind(queueName,exchangeName,queueName);
 
         //发送消息
-        String message="hello rabbitmq";
+        String message="hello rabbitmq 集群";
 
         /**
          * 发送消息
@@ -73,7 +73,7 @@ public class Producer {
 
         channel.close();
         connection.close();
-
+        System.out.println("发送消息成功");
     }
 
 }
